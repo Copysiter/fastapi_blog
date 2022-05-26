@@ -1,12 +1,13 @@
 import { writable } from "svelte/store";
 
-type Post = {
+export type Post = {
 	_id: string;
 	title: string;
 	slug: string;
 	categories: string[];
 	body: string;
 };
+
 export const posts = writable(Array<Post>());
 
 const fetchPosts = async () => {
