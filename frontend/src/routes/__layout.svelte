@@ -1,2 +1,2 @@
-<a href="/" >Home</a>
-<slot></slot>
+<a href="/">Home</a>
+<slot />
