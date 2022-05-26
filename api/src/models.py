@@ -2,7 +2,7 @@ from typing import List, Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
-from api.app import PyObjectId
+from .utils import PyObjectId
 
 
 class PostModel(BaseModel):

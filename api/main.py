@@ -1,14 +1,13 @@
-from bson import ObjectId
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI
 import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
 import uvicorn
-from .router import router
+from src.router import router as posts_router
 load_dotenv()
 
 app = FastAPI()
-app.include_router(router=router, prefix="/posts")
+app.include_router(router=posts_router, prefix="/posts")
 
 
 @app.on_event("startup")
