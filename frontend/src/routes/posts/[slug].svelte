@@ -18,3 +18,7 @@
 <span>{category}</span>
 {/each}
 <p>{post.body}</p>
+<div>
+  <button type="button">Edit</button>
+  <button type="button">Delete</button>
+</div>
