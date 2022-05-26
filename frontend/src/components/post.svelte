@@ -4,4 +4,7 @@
 </script>
 
 <a href={`/posts/${post.slug}`}><h2>{post.title}</h2></a>
+{#each post.categories as category}
+<span>{category}</span>
+{/each}
 <p>{post.body}</p>

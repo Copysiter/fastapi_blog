@@ -1,6 +1,6 @@
 <script context="module">
   // @ts-ignore
-  export const load = async ({params}) => {
+  export const load = async ({params, fetch}) => {
     const slug = params.slug;
     const url = `http://127.0.0.1:8000/posts/${slug}`;
     const response = await fetch(url);
@@ -14,3 +14,7 @@
 </script>
 
 <h2>{post.title}</h2>
+{#each post.categories as category}
+<span>{category}</span>
+{/each}
+<p>{post.body}</p>
