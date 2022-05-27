@@ -4,11 +4,14 @@ import motor.motor_asyncio
 import os
 from dotenv import load_dotenv
 import uvicorn
-from src.router import router as posts_router
+from src.routes.posts import router as posts_router
+from src.routes.categories import router as categories_router
 load_dotenv()
 
 app = FastAPI()
+
 app.include_router(router=posts_router, prefix="/posts")
+app.include_router(router=categories_router, prefix="/categories")
 
 origins = [
     "http://localhost:3000"

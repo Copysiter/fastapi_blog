@@ -3,10 +3,8 @@
 </svelte:head>
 
 <h2>{post.title}</h2>
-{post.created_at} | Categories :
-{#each post.categories as category}
-<a href={`/categories/${category}`}><span>{category}</span></a>
-{/each}
+{post.created_at}
+<a href={`/categories/${post.category}`}><span>{post.category}</span></a>
 <p>{post.body}</p>
 
 <script context="module">
@@ -16,6 +14,7 @@
     const url = `http://127.0.0.1:8000/posts/${slug}`;
     const response = await fetch(url);
     const post = await response.json();
+    console.log(post)
     return {props : {post}};
   }
 </script>

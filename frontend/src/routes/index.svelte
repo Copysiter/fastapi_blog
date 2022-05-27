@@ -4,7 +4,8 @@
 
 <h1>Blog</h1>
 
-<input type="text" placeholder="Search post..." bind:value={searchTerm}/>
+<button>Add Post ✒️</button>
+<input type="text" placeholder="🔍 Search post..." bind:value={searchTerm}/>
 
 <div class="posts">
 	{#each filteredPosts as post}

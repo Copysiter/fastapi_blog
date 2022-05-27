@@ -10,7 +10,7 @@ class PostModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     title: str = Field(...)
     slug: str = Field(...)
-    categories: List[str] = Field(...)
+    category: str = Field(...)
     body: str = Field(...)
     created_at: datetime = Field(default_factory=datetime.now)
 
@@ -22,7 +22,7 @@ class PostModel(BaseModel):
 class UpdatedPostModel(BaseModel):
     title: Optional[str]
     slug: Optional[str]
-    categories: Optional[List[str]]
+    category: Optional[str]
     body: Optional[str]
 
     class Config:

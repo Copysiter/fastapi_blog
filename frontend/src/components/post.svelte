@@ -4,11 +4,9 @@
 	</a>
 	{post.created_at}
 	<div>
-		{#each post.categories as category}
-			<a href={`/categories/${category}`}>
-				<span>{category}</span>
+			<a href={`/categories/${post.category}`}>
+				<span>{post.category}</span>
 			</a>
-		{/each}
 	</div>
 	<p>{`${post.body.slice(0,400)}...`}</p>
 </div>
