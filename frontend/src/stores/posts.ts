@@ -6,6 +6,7 @@ export type Post = {
 	slug: string;
 	categories: string[];
 	body: string;
+	created_at: string;
 };
 
 export const posts = writable(Array<Post>());
@@ -16,11 +17,7 @@ const fetchPosts = async () => {
 	const data = await response.json();
 	const loadedPosts: Post[] = data.map((data: Post) => {
 		return {
-			_id: data["_id"],
-			title: data.title,
-			slug: data.slug,
-			categories: data.categories,
-			body: data.body
+			...data
 		};
 	});
 	posts.set(loadedPosts);

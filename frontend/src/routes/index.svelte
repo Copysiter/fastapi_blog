@@ -18,11 +18,7 @@
 		const data = await response.json();
 		const loadedPosts: Post[] = data.map((data: Post) => {
 		return {
-			_id: data["_id"],
-			title: data.title,
-			slug: data.slug,
-			categories: data.categories,
-			body: data.body
+			...data
 		};
 	});
 	return {props : {posts : loadedPosts}}

@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from typing import List, Optional
 from bson import ObjectId
 from pydantic import BaseModel, Field
@@ -11,6 +12,7 @@ class PostModel(BaseModel):
     slug: str = Field(...)
     categories: List[str] = Field(...)
     body: str = Field(...)
+    created_at: datetime = Field(default_factory=datetime.now)
 
     class Config:
         allow_population_by_field_name = True
