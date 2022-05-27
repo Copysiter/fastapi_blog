@@ -1,3 +1,14 @@
+<svelte:head>
+  <title>{post.title}</title>
+</svelte:head>
+
+<h2>{post.title}</h2>
+{post.created_at} | Categories :
+{#each post.categories as category}
+<a href={`/categories/${category}`}><span>{category}</span></a>
+{/each}
+<p>{post.body}</p>
+
 <script context="module">
   // @ts-ignore
   export const load = async ({params, fetch}) => {
@@ -12,10 +23,3 @@
   import type { Post} from "../../stores/posts"
   export let  post : Post;
 </script>
-
-<h2>{post.title}</h2>
-{#each post.categories as category}
-<span>{category}</span>
-{/each}
-<p>{post.body}</p>
-

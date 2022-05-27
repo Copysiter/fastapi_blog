@@ -6,9 +6,11 @@
 
 <input type="text" placeholder="Search post..." bind:value={searchTerm}/>
 
-{#each filteredPosts as post}
+<div class="posts">
+	{#each filteredPosts as post}
 	<PostComponent {post} />
 {/each}
+</div>
 
 <script context="module" lang="ts">
   // @ts-ignore
