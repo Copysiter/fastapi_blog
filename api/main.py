@@ -1,17 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import motor.motor_asyncio
-import os
 from dotenv import load_dotenv
 import uvicorn
-from src.routes.posts import router as posts_router
-from src.routes.categories import router as categories_router
+from database import Database
+from routes.articles import router as articles_router
 load_dotenv()
 
 app = FastAPI()
 
-app.include_router(router=posts_router, prefix="/posts")
-app.include_router(router=categories_router, prefix="/categories")
+app.include_router(router=articles_router)
 
 origins = [
     "http://localhost:3000"
@@ -24,17 +21,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-
-@app.on_event("startup")
-async def start_database():
-    app.database_client = motor.motor_asyncio.AsyncIOMotorClient(
-        os.environ["MONGODB_URL"])
-    app.database = app.database_client.blog
-
-
-@app.on_event("shutdown")
-async def shutdown_database():
-    app.database_client.close()
+try:
+    app.database = Database("blog")
+    app.database.login()
+except KeyError:
+    raise KeyError("Invalid connection url specified.")
 
 
 if __name__ == "__main__":

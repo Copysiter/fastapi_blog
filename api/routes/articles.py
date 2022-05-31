@@ -1,33 +1,27 @@
 from typing import List
-from fastapi import APIRouter, Body, HTTPException, Request, status
+from fastapi import APIRouter, Body, HTTPException, Request, Response, status
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
-from src.models import PostModel, UpdatedPostModel
+from models import PostModel, UpdatedPostModel
 
-router = APIRouter()
+router = APIRouter(
+    tags=["articles"],
+    prefix="/articles"
+)
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-async def publish_post(request: Request, post: PostModel = Body(...)):
-    post = jsonable_encoder(post)
-    new_post = await request.app.database["posts"].insert_one(post)
-    created_post = await request.app.database["posts"].find_one({"_id": new_post.inserted_id})
-    return created_post
+async def publish_article(request: Request, article: PostModel = Body(...)):
+    article = jsonable_encoder(article)
+    new_article = await request.app.database.insert("articles", article)
+    created_article = await request.app.database.find_article_by_id(new_article.inserted_id)
+    return created_article
 
 
 @router.get("/", response_model=List[PostModel])
 async def get_posts(request: Request):
-    posts = await request.app.database["posts"].find().to_list(50)
+    posts = await request.app.database.find_all("articles")
     return posts
-
-
-@router.get("/{slug}", response_model=PostModel)
-async def get_post(request: Request, slug: str):
-    post = await request.app.database["posts"].find_one({"slug": slug})
-    if post is not None:
-        return post
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                        detail=f"Post not found")
 
 
 @router.put("/{id}")
@@ -51,6 +45,6 @@ async def update_post(request: Request, id: str, post: UpdatedPostModel = Body(.
 async def delete_post(request: Request, id: str):
     delete_result = await request.app.database["posts"].delete_one({"_id": id})
     if delete_result.deleted_count == 1:
-        return JSONResponse(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        return Response(status_code=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                         detail=f"Post not found")
