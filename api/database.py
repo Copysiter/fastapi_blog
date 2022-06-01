@@ -18,9 +18,14 @@ class Database:
         insert_result = await collection.insert_one(data)
         return insert_result
 
-    async def find_article_by_id(self, id: str):
+    async def find_article(self, id: str):
         collection = self.database.get_collection("articles")
         find_result = await collection.find_one({"_id": id})
+        return find_result
+
+    async def get_user(self, query: dict):
+        collection = self.database.get_collection("users")
+        find_result = await collection.find_one(query)
         return find_result
 
     async def find_all(self, collection_name: str, max_results: int = 50):

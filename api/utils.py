@@ -1,4 +1,7 @@
-from bson import ObjectId
+from bson.objectid import ObjectId
+from passlib.context import CryptContext
+
+password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class PyObjectId(ObjectId):
@@ -15,3 +18,11 @@ class PyObjectId(ObjectId):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(type="str")
+
+
+def hash(plain_password: str):
+    return password_context.hash(plain_password)
+
+
+def verify(plain_password: str, password: str) -> bool:
+    return password_context.verify(plain_password, password)

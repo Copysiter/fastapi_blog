@@ -3,12 +3,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 from database import Database
-from routes.articles import router as articles_router
+from routes import auth, categories, users, posts
 load_dotenv()
 
 app = FastAPI()
 
-app.include_router(router=articles_router)
+app.include_router(
+    router=auth.router
+)
+app.include_router(
+    router=users.router
+)
+app.include_router(
+    router=posts.router
+)
 
 origins = [
     "http://localhost:3000"
