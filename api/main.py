@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 import uvicorn
 from database import Database
 from routes import auth, categories, users, posts
-load_dotenv()
+from config import settings
 
 app = FastAPI()
 
@@ -38,8 +37,8 @@ except KeyError:
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
-        host="127.0.0.1",
-        port=8000,
-        reload=True
+        settings.APP_NAME,
+        host=settings.HOST,
+        port=settings.PORT,
+        reload=settings.RELOAD
     )
