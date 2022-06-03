@@ -9,7 +9,6 @@ from utils import PyObjectId
 class UserModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     username: str = Body(...)
-    email: EmailStr = Body(...)
     password: str = Body(...)
     created_at: datetime = Field(default=datetime.now())
 

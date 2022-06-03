@@ -15,6 +15,7 @@ router = APIRouter(
 @router.post("/register", response_model=UserOutModel)
 async def register(request: Request, user: UserModel = Body(...)):
     try:
+        print("new registration")
         hashed_password = hash(user.password)
         user.password = hashed_password
         user = jsonable_encoder(user)
